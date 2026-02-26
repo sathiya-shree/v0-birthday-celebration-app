@@ -72,14 +72,15 @@ export default function BirthdayPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
               className="flex flex-col items-center gap-8 w-full"
             >
               <div className="text-center space-y-4">
                 <p className="text-gold/60 text-[10px] tracking-[0.5em] uppercase font-bold">{today}</p>
                 
-                {/* Updated Badge with Letter Icon */}
+                {/* Badge with Pulsing Letter Icon */}
                 <div className="flex items-center gap-3 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md">
-                  {celebrated ? <MailOpen className="w-4 h-4 text-gold" /> : <Mail className="w-4 h-4 text-gold animate-bounce" />}
+                  <Mail className="w-4 h-4 text-gold animate-pulse" />
                   <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/70">A Magical Moment</span>
                   <Sparkles className="w-4 h-4 text-yellow-400" />
                 </div>
@@ -106,17 +107,18 @@ export default function BirthdayPage() {
               </div>
             </motion.div>
           ) : (
-            /* --- STATE 2: HBD BOX & THE LETTER REVEAL --- */
+            /* --- STATE 2: HBD BOX & THE LETTER REVEAL ONLY --- */
             <motion.div 
               key="message"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
               className="flex flex-col items-center gap-6 text-center max-w-2xl w-full"
             >
               {/* Main HBD Box */}
               <BirthdayMessage visible={celebrated} />
 
-              {/* The Physical Letter Animation */}
+              {/* The "Paper Unfolding" Letter Animation */}
               <motion.div 
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: "auto", opacity: 1 }}
@@ -138,23 +140,23 @@ export default function BirthdayPage() {
                 
                 <div className="mt-8 pt-6 border-t border-white/5">
                    <p className="text-gold font-serif italic text-xl">With all my love,</p>
-                   <p className="text-white/40 text-[10px] mt-2 tracking-widest uppercase">February 2026</p>
+                   <p className="text-white/40 text-[10px] mt-2 tracking-widest uppercase">Handcrafted with Love • 2026</p>
                 </div>
               </motion.div>
 
               <button 
                 onClick={() => setCelebrated(false)} 
-                className="mt-8 group flex items-center gap-2 text-[10px] uppercase tracking-widest text-white/30 hover:text-white transition-all"
+                className="mt-8 group flex items-center gap-2 text-[10px] uppercase tracking-widest text-white/30 hover:text-white transition-all underline underline-offset-8"
               >
                 <PartyPopper className="w-3 h-3 group-hover:rotate-12" />
-                Show Cake Again
+                Return to Cake
               </button>
             </motion.div>
           )}
         </AnimatePresence>
       </section>
 
-      {/* Secret Popups */}
+      {/* Secret Message Popups */}
       <AnimatePresence>
         {activeSecret && (
           <motion.div 
@@ -163,10 +165,10 @@ export default function BirthdayPage() {
           >
             <motion.div 
               initial={{ scale: 0.8 }} animate={{ scale: 1 }} exit={{ scale: 0.8 }}
-              className="bg-[#111] border border-gold/20 p-10 rounded-[40px] text-center max-w-xs"
+              className="bg-[#111] border border-gold/20 p-10 rounded-[40px] text-center max-w-xs shadow-2xl"
             >
-              <p className="text-xl font-medium mb-8">{activeSecret}</p>
-              <button onClick={() => setActiveSecret(null)} className="text-[10px] uppercase font-bold tracking-widest text-gold border border-gold/30 px-6 py-3 rounded-full">Close</button>
+              <p className="text-xl font-medium mb-8 leading-relaxed">{activeSecret}</p>
+              <button onClick={() => setActiveSecret(null)} className="text-[10px] uppercase font-bold tracking-widest text-gold border border-gold/30 px-6 py-3 rounded-full hover:bg-gold/10">Close</button>
             </motion.div>
           </motion.div>
         )}
